@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fdu.daily.mapper.FduDailyUpdateMapper">
+
+    <resultMap type="FduDailyUpdate" id="FduDailyUpdateResult">
+                    <result property="id" column="id"/>
+                    <result property="todayDate" column="today_date"/>
+                    <result property="studentNo" column="student_no"/>
+                    <result property="onCampus" column="on_campus"/>
+                    <result property="currentDistrict" column="current_district"/>
+                    <result property="currentLocation" column="current_location"/>
+                    <result property="temperature" column="temperature"/>
+                    <result property="feeling" column="feeling"/>
+                    <result property="contact1" column="contact1"/>
+                    <result property="contact2" column="contact2"/>
+                    <result property="isolate" column="isolate"/>
+                    <result property="other" column="other"/>
+                    <result property="remark" column="remark"/>
+                    <result property="createBy" column="create_by"/>
+                    <result property="createTime" column="create_time"/>
+                    <result property="updateBy" column="update_by"/>
+                    <result property="updateTime" column="update_time"/>
+            </resultMap>
+
+    <sql id="selectFduDailyUpdateVo">
+        select id, today_date, student_no, on_campus, current_district, current_location, temperature, feeling, contact1, contact2, isolate, other, remark, create_by, create_time, update_by, update_time        from fdu_daily_update
+    </sql>
+
+    <select id="selectFduDailyUpdateList" parameterType="FduDailyUpdate" resultMap="FduDailyUpdateResult">
+        <include refid="selectFduDailyUpdateVo"/>
+        <where>
+                                                                                                    <if test="todayDate != null ">
+                            and today_date = #{todayDate}
+                        </if>
+                                                                                                            <if test="studentNo != null  and studentNo != ''">
+                            and student_no like concat('%', #{studentNo}, '%')
+                        </if>
+                                                                                                            <if test="onCampus != null  and onCampus != ''">
+                            and on_campus = #{onCampus}
+                        </if>
+                                                                                                            <if test="currentDistrict != null  and currentDistrict != ''">
+                            and current_district = #{currentDistrict}
+                        </if>
+                                                                                                            <if test="currentLocation != null  and currentLocation != ''">
+                            and current_location = #{currentLocation}
+                        </if>
+                                                                                                            <if test="temperature != null  and temperature != ''">
+                            and temperature = #{temperature}
+                        </if>
+                                                                                                            <if test="feeling != null  and feeling != ''">
+                            and feeling = #{feeling}
+                        </if>
+                                                                                                            <if test="contact1 != null  and contact1 != ''">
+                            and contact1 = #{contact1}
+                        </if>
+                                                                                                            <if test="contact2 != null  and contact2 != ''">
+                            and contact2 = #{contact2}
+                        </if>
+                                                                                                            <if test="isolate != null  and isolate != ''">
+                            and isolate = #{isolate}
+                        </if>
+                                                                                                            <if test="other != null  and other != ''">
+                            and other = #{other}
+                        </if>
+                                                                                                                                                                                                    </where>
+    </select>
+
+    <select id="selectFduDailyUpdateById" parameterType="Long" resultMap="FduDailyUpdateResult">
+        <include refid="selectFduDailyUpdateVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectFduDailyUpdateListByDateAndNo" resultType="com.fdu.daily.domain.FduDailyUpdate">
+        <include refid="selectFduDailyUpdateVo"/>
+        where today_date = #{todayDate} and student_no = #{studentNo}
+    </select>
+
+    <insert id="insertFduDailyUpdate" parameterType="FduDailyUpdate" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into fdu_daily_update
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                                                                            <if test="todayDate != null">today_date,
+                    </if>
+                                                                <if test="studentNo != null">student_no,
+                    </if>
+                                                                <if test="onCampus != null">on_campus,
+                    </if>
+                                                                <if test="currentDistrict != null">current_district,
+                    </if>
+                                                                <if test="currentLocation != null">current_location,
+                    </if>
+                                                                <if test="temperature != null">temperature,
+                    </if>
+                                                                <if test="feeling != null">feeling,
+                    </if>
+                                                                <if test="contact1 != null">contact1,
+                    </if>
+                                                                <if test="contact2 != null">contact2,
+                    </if>
+                                                                <if test="isolate != null">isolate,
+                    </if>
+                                                                <if test="other != null">other,
+                    </if>
+                                                                <if test="remark != null">remark,
+                    </if>
+                                                                <if test="createBy != null">create_by,
+                    </if>
+                                                                <if test="createTime != null">create_time,
+                    </if>
+                                                                <if test="updateBy != null">update_by,
+                    </if>
+                                                                <if test="updateTime != null">update_time,
+                    </if>
+                                    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                                                                            <if test="todayDate != null">#{todayDate},
+                    </if>
+                                                                <if test="studentNo != null">#{studentNo},
+                    </if>
+                                                                <if test="onCampus != null">#{onCampus},
+                    </if>
+                                                                <if test="currentDistrict != null">#{currentDistrict},
+                    </if>
+                                                                <if test="currentLocation != null">#{currentLocation},
+                    </if>
+                                                                <if test="temperature != null">#{temperature},
+                    </if>
+                                                                <if test="feeling != null">#{feeling},
+                    </if>
+                                                                <if test="contact1 != null">#{contact1},
+                    </if>
+                                                                <if test="contact2 != null">#{contact2},
+                    </if>
+                                                                <if test="isolate != null">#{isolate},
+                    </if>
+                                                                <if test="other != null">#{other},
+                    </if>
+                                                                <if test="remark != null">#{remark},
+                    </if>
+                                                                <if test="createBy != null">#{createBy},
+                    </if>
+                                                                <if test="createTime != null">#{createTime},
+                    </if>
+                                                                <if test="updateBy != null">#{updateBy},
+                    </if>
+                                                                <if test="updateTime != null">#{updateTime},
+                    </if>
+                                    </trim>
+    </insert>
+
+    <update id="updateFduDailyUpdate" parameterType="FduDailyUpdate">
+        update fdu_daily_update
+        <trim prefix="SET" suffixOverrides=",">
+                                                                            <if test="todayDate != null">today_date =
+                        #{todayDate},
+                    </if>
+                                                                <if test="studentNo != null">student_no =
+                        #{studentNo},
+                    </if>
+                                                                <if test="onCampus != null">on_campus =
+                        #{onCampus},
+                    </if>
+                                                                <if test="currentDistrict != null">current_district =
+                        #{currentDistrict},
+                    </if>
+                                                                <if test="currentLocation != null">current_location =
+                        #{currentLocation},
+                    </if>
+                                                                <if test="temperature != null">temperature =
+                        #{temperature},
+                    </if>
+                                                                <if test="feeling != null">feeling =
+                        #{feeling},
+                    </if>
+                                                                <if test="contact1 != null">contact1 =
+                        #{contact1},
+                    </if>
+                                                                <if test="contact2 != null">contact2 =
+                        #{contact2},
+                    </if>
+                                                                <if test="isolate != null">isolate =
+                        #{isolate},
+                    </if>
+                                                                <if test="other != null">other =
+                        #{other},
+                    </if>
+                                                                <if test="remark != null">remark =
+                        #{remark},
+                    </if>
+                                                                <if test="createBy != null">create_by =
+                        #{createBy},
+                    </if>
+                                                                <if test="createTime != null">create_time =
+                        #{createTime},
+                    </if>
+                                                                <if test="updateBy != null">update_by =
+                        #{updateBy},
+                    </if>
+                                                                <if test="updateTime != null">update_time =
+                        #{updateTime},
+                    </if>
+                                    </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFduDailyUpdateById" parameterType="Long">
+        delete from fdu_daily_update where id = #{id}
+    </delete>
+
+    <delete id="deleteFduDailyUpdateByIds" parameterType="String">
+        delete from fdu_daily_update where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

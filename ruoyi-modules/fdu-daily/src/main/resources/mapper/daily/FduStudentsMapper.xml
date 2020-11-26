@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fdu.daily.mapper.FduStudentsMapper">
+    
+    <resultMap type="FduStudents" id="FduStudentsResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="studentNo"    column="student_no"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="school"    column="school"    />
+        <result property="category"    column="category"    />
+        <result property="type"    column="type"    />
+        <result property="teacher"    column="teacher"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectFduStudentsVo">
+        select id, name, student_no, mobile, school, category, type, teacher, remark from fdu_students
+    </sql>
+
+    <select id="selectFduStudentsList" parameterType="FduStudents" resultMap="FduStudentsResult">
+        <include refid="selectFduStudentsVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="studentNo != null  and studentNo != ''"> and student_no like concat('%', #{studentNo}, '%')</if>
+            <if test="mobile != null  and mobile != ''"> and mobile like concat('%', #{mobile}, '%')</if>
+            <if test="school != null  and school != ''"> and school like concat('%', #{school}, '%')</if>
+            <if test="teacher != null  and teacher != ''"> and teacher = #{teacher}</if>
+        </where>
+    </select>
+
+    <select id="selectFduStudentsByName" resultMap="FduStudentsResult">
+        <include refid="selectFduStudentsVo"/>
+        where name = #{name}
+    </select>
+    
+    <select id="selectFduStudentsById" parameterType="Long" resultMap="FduStudentsResult">
+        <include refid="selectFduStudentsVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectFduStudentsByNameAndNo" resultType="com.fdu.daily.domain.FduStudents">
+        <include refid="selectFduStudentsVo"/>
+        where name = #{name} and student_no = #{studentNo}
+    </select>
+    <select id="selectFduStudentsByNo" resultType="com.fdu.daily.domain.FduStudents">
+        <include refid="selectFduStudentsVo"/>
+        where student_no = #{studentNo}
+    </select>
+
+    <insert id="insertFduStudents" parameterType="FduStudents" useGeneratedKeys="true" keyProperty="id">
+        insert into fdu_students
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="studentNo != null">student_no,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="school != null">school,</if>
+            <if test="category != null">category,</if>
+            <if test="type != null">type,</if>
+            <if test="teacher != null">teacher,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="studentNo != null">#{studentNo},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="school != null">#{school},</if>
+            <if test="category != null">#{category},</if>
+            <if test="type != null">#{type},</if>
+            <if test="teacher != null">#{teacher},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFduStudents" parameterType="FduStudents">
+        update fdu_students
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="studentNo != null">student_no = #{studentNo},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="school != null">school = #{school},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="teacher != null">teacher = #{teacher},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFduStudentsById" parameterType="Long">
+        delete from fdu_students where id = #{id}
+    </delete>
+
+    <delete id="deleteFduStudentsByIds" parameterType="String">
+        delete from fdu_students where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
